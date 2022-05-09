@@ -1,0 +1,39 @@
+species: 
+  cryptops-parisi:
+    code: CRYPA # code with 5 letters
+    taxid: 173049 # if the specie doesn't have a taxid, invent one
+  polydesmus-angustus:
+    code: POLAN
+    taxid: 1068628
+  polydesmus-complanatus:
+    code: POLCO
+    taxid: 510027
+
+main_protein_set:
+  metazoa-arthropoda: # name of set 1
+    large_taxon_taxid: 33208 # reel taxid
+    small_taxon_taxid: 6656 # reel taxid 
+    species:
+      - All # use this set for all species
+
+augustus_protein_set:
+  myriapoda: 
+    taxid: 61985 # reel taxid 
+    species: 
+      - All
+
+transcripts:
+  chilopoda: 
+    taxid: 7540 # reel taxid 
+    species: # list of specie's names which have to use this set of transcripts
+      - cryptops-parisi
+  diplopoda:  
+    taxid: 7553  # reel taxid 
+    species:
+      - polydesmus-angustus
+      - polydesmus-complanatus
+
+lib_busco: arthropoda_odb10
+
+repeat_masker_libraries:
+  lib_embl: '/path/to/RMRBSeqs.embl' # absolute path

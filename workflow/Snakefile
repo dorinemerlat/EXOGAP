@@ -1,0 +1,73 @@
+import request_api
+import os
+
+configfile: "config/config.yaml"
+
+
+def get_code_taxon(wildcards):
+    return INFOS_SPECIES[wildcards.specie]['code']
+
+
+def get_name_set(specie, dataset):
+    for set_name, infos in dataset.items():
+        #print(set_name, specie)
+        if 'All' in infos['species'] and len(infos['species']) == 1: 
+            #print(set_name + ' used as set1')
+            return set_name
+        elif 'All' in infos['species'] and len(infos['species']) != 1:
+            #print('Error: the specie list in main_protein_set is not ambigous')
+            sys.exit()
+        else:
+            if specie in infos['species']:
+                #print(set_name, specie, infos['species'])
+                #print(set_name + ' used as set2')
+                return set_name
+    
+    #print("Error: the main protein set doesn't found for " + specie)
+    sys.exit()
+
+
+def get_transcript_set(wildcards):
+    return expand(
+        "resources/transcripts/{transcripts}_set.fa",
+        transcripts = get_name_set(wildcards.specie, INFOS_SET_TRANSCRIPTS))
+
+
+def get_main_protein_set(wildcards):
+    return expand(
+        "resources/proteins/main/{main_protein}_protein_set.fa",
+        main_protein = get_name_set(wildcards.specie, INFOS_MAIN_SET_PROTEIN))
+
+
+def get_augustus_protein_set(wildcards):
+    return expand(
+        "resources/proteins/augustus/{augustus_protein}_protein_set.fa",
+        augustus_protein = get_name_set(wildcards.specie, INFOS_AUGUSTUS_SET_PROTEIN))
+
+
+INFOS_SPECIES = config['species']
+
+SPECIES = list()
+for i in INFOS_SPECIES:
+    SPECIES.append(i)
+
+INFOS_MAIN_SET_PROTEIN = config['main_protein_set']
+
+INFOS_AUGUSTUS_SET_PROTEIN = config['augustus_protein_set']
+
+INFOS_SET_TRANSCRIPTS = config['transcripts']
+
+include: "rules/configure_envs.smk"
+include: "rules/pre_processing.smk"
+include: "rules/repeat_annotation.smk"
+include: "rules/set_construction.smk"
+include: "rules/coding_gene_annotation.smk"
+include: "rules/pseudogene_identification.smk"
+include: "rules/functionnal_annotation.smk"
+include: "rules/noncoding_gene_annotation.smk"
+include: "rules/post_process.smk"
+
+rule all:
+    input:
+        # rules.maker_rnd1.output.annotation
+        expand("results/all/{specie}_all.gb", specie = SPECIES)
