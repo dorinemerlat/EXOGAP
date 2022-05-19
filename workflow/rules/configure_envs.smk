@@ -124,28 +124,6 @@ rule check_repeat_modeler:
 
         touch {output}
         """
-                
-
-        # cd $exogap
-
-        # # symblink of repeatmasker in bin
-        # search_dir={params.real_files}
-
-        # # Create symlinks for the RepeatMasker scripts
-        # for entry in "$search_dir"/* ; do
-        #     if [[ "$entry" == *".pm"* ]] ; then
-        #         file_name=$(echo $entry| rev |cut -d '/' -f 1 |rev)
-        #         link={params.link_files}/$file_name
-        #         entry=$(pwd)/$entry
-        #         if [[ ! -L "$link" ]] ; then
-        #             echo ln -s $entry $link
-        #             ln -s $entry $link
-        #         fi
-        #     fi
-        # done
-
-        # echo {output}
-        # touch {output}
 
 rule check_maker:
     input:
@@ -158,10 +136,29 @@ rule check_maker:
         maker --version
         """
 
+
+# rule check_install_jvarkit:
+#     output:
+#         "workflow/other_scripts/jvarkit/dist/mergeblastxml.jar"
+#     shell:
+#         """
+#         if [ ! -d workflow/other_scripts ]; then
+#             mkdir workflow/other_scripts
+#         fi
+
+#         cd workflow/other_scripts
+
+#         git clone "https://github.com/lindenb/jvarkit.git"
+#         cd jvarkit
+#         ./gradlew mergeblastxml
+#         """
+
+        
 rule check_all_config:
     input:
         repeat_masker = expand("results/check_config/config_{annotation_env}_repeat_masker.txt", annotation_env = 'annotation'),
-        repeatmodeler = expand("results/check_config/config_{repeatmodeler_env}_rm.txt", repeatmodeler_env = 'repeatmodeler')
+        repeatmodeler = expand("results/check_config/config_{repeatmodeler_env}_rm.txt", repeatmodeler_env = 'repeatmodeler')#,
+        # mergeblast = rules.check_install_jvarkit.output
     output:
         all = "results/check_config/check_all_config.txt"
     conda:

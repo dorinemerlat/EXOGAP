@@ -28,7 +28,6 @@ At the time of release, MyriAnnot was tested with:
 - [Agat v0.8.0](https://github.com/NBISweden/AGAT)
 - [RepeatModeler 2.0.3](https://github.com/Dfam-consortium/RepeatModeler)
 - [RepeatMasker 4.1.2-p1](https://www.repeatmasker.org/)
-- [Augustus 3.4.0](https://github.com/Gaius-Augustus/Augustus)
 - [Snap 2006-07-28](https://github.com/KorfLab/SNAP)
 - [Busco ov5.3.0](https://busco.ezlab.org)
 - [T-RNA-scan-SE 2.0.9](http://lowelab.ucsc.edu/tRNAscan-SE/)
@@ -48,12 +47,13 @@ At the time of release, MyriAnnot was tested with:
 1. Manually install programs that cannot be installed by conda: [Gene-Mark-ES](http://opal.biology.gatech.edu/genemark/) and [Rnammer](https://services.healthtech.dtu.dk/service.php?RNAmmer-1.2).
 
     Being a SnakeMake workflow, most programs are installed via conda thanks to three dedicated environments: 
-    - *annotation*: Maker, Agat RepeatMasker, Augustus, Snap, T-RNA-scan-SE, Infernal, Barrnap.
-    - *repeatmodeler*: RepeatModeler.
-    - *toolbox*: Busco, CD-HIT, SRA Tookit and Entrez Direct.
+    - *annotation*: [Maker2](https://www.yandell-lab.org/software/maker.html) (3.01.03), [Agat](https://github.com/NBISweden/AGAT) (v0.8.0), [RepeatMasker](https://www.repeatmasker.org/) (4.1.2-p1), [Augustus](https://github.com/Gaius-Augustus/Augustus) (3.4.0), [Snap](https://github.com/KorfLab/SNAP) (2006-07-28), [T-RNA-scan-SE](http://lowelab.ucsc.edu/tRNAscan-SE/) (2.0.9), [Infernal](http://eddylab.org/infernal/) (1.1.4) and [Barnnap](https://github.com/tseemann/barrnap) (0.9).
+    - *repeatmodeler*: [RepeatModeler](https://github.com/Dfam-consortium/RepeatModeler) (2.0.3)
+    - *toolbox*: [Busco](https://busco.ezlab.org) (ov5.3.0), [CD-HIT](http://weizhong-lab.ucsd.edu/cd-hit/) (4.8.1), [SRA Tookit](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=software) and [Entrez Direct](https://www.ncbi.nlm.nih.gov/books/NBK179288/), [Blast](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download) (2.12.0+) and [interproscan](https://github.com/ebi-pf-team/interproscan) (5.55_88.0)
 
     These environments are installed and used automatically thanks to the annotation.yaml and toolbox.yaml environment files (located in workflow/envs/). 
 
+    [Jvarkit](https://github.com/lindenb/jvarkit) est cloné automatiquement depuis GitHub dans workflow/scripts/ et les programmes nécessaires sont compilés.
 1. Clone the repository
     
     ```bash
@@ -73,7 +73,7 @@ At the time of release, MyriAnnot was tested with:
 
 2. Let Snakemake install the needed conda environments:
     ```bash
-    snakemake --use-conda --cores 4 --snakefile workflow/Snakefile-env.smk
+    snakemake --use-conda --cores 4 --snakefile workflow/configure.smk
     ```
     Conda environements are installed to EXOGAP/.snakemake/conda/
 
