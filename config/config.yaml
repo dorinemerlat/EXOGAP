@@ -36,4 +36,7 @@ transcripts:
 lib_busco: arthropoda_odb10
 
 repeat_masker_libraries:
-  lib_embl: '/path/to/RMRBSeqs.embl' # absolute path
+  lib_embl: /path/to/RMRBSeqs.embl # absolute path
+
+functionnal:
+  blastBank: /gstock/user/merlat/Annotation/blast-uniprot/blast-uniprot

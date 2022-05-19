@@ -36,7 +36,7 @@ def main():
 
     args = parser.parse_args()
 
-    sorting_repeats(args.input, args.knowns, args.unknowns)
+    sorting(args.input, args.unknowns, args.knowns)
     
 
 if __name__ == "__main__":

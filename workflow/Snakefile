@@ -45,6 +45,24 @@ def get_augustus_protein_set(wildcards):
         augustus_protein = get_name_set(wildcards.specie, INFOS_AUGUSTUS_SET_PROTEIN))
 
 
+def find_yaml(environnement):
+    for file_name in os.listdir('.snakemake/conda'):
+        if '.yaml' in file_name:
+            with open('.snakemake/conda/' + file_name, 'r') as file:
+                file = file.readlines()
+            if environnement in file[0]:
+                return '.snakemake/conda/' + file_name
+
+
+def find_environnement(environnement):
+    yaml = find_yaml(environnement)
+    return yaml.replace('.yaml', '')
+
+
+def get_conda(environnement):
+    return "../envs/" + environnement + ".yaml"
+
+
 INFOS_SPECIES = config['species']
 
 SPECIES = list()
@@ -67,7 +85,8 @@ include: "rules/functionnal_annotation.smk"
 include: "rules/noncoding_gene_annotation.smk"
 include: "rules/post_process.smk"
 
+        # rules.maker_rnd1.output.annotation
+        # expand("results/all/{specie}_all.gb", specie = SPECIES)
 rule all:
     input:
-        # rules.maker_rnd1.output.annotation
-        expand("results/all/{specie}_all.gb", specie = SPECIES)
+        expand("results/functionnal/blast/{specie}_blast.fa", specie = SPECIES)

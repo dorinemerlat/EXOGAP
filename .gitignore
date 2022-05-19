@@ -1,0 +1,4 @@
+config/config_myriapoda.yaml
+dag_install.svg
+workflow/envs/repeatmodel_old.yaml
+workflow/envs/repeatmodeler_old.yaml

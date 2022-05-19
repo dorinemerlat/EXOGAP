@@ -1,4 +1,4 @@
-
+rule pseudogene_identifification:
     input:
         "results/maker_rnd3/{specie}.gff"
     output:

@@ -1,4 +1,4 @@
-while getopts :f:o:c:j:k:u:r: flag
+while getopts :f:o:c:s:k:u:r: flag
 do
     case "${flag}" in
         f) fasta=${OPTARG};;
@@ -8,13 +8,13 @@ do
         k) known_repeats=${OPTARG};;
         u) unknown_repeats=${OPTARG};;
         r) repset=${OPTARG};;
-        *) echo 'run_busco.sh -f <genome/proteome.fa> -o <path_repeats_dir> -c <cpu> -j <specie> -k <known.fa> -u <unknown.fa> -r <repbase>'
+        *) echo 'run_repeats_basic.sh -f <genome.fa> -o <path_repeats_dir> -c <cpu> -s <specie> -k <knowns.fa> -u <unknowns.fa> -r <repbase>'
            exit 0
     esac
 done
 
+cd $repeatsDir
 mkdir $repeatsDir
-$repeatsDir
 
 # First iteration: RepBase or RepSet
 mkdir repBase_mask

@@ -43,12 +43,13 @@ At the time of release, MyriAnnot was tested with:
 
 ### Installation
 
-1. Install [SnakeMake](https://www.ncbi.nlm.nih.gov/books/NBK179288/) following the procedure indicated [here](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html).
+1. Install [SnakeMake](https://snakemake.readthedocs.io/en/stable/) following the procedure indicated [here](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html).
 
 1. Manually install programs that cannot be installed by conda: [Gene-Mark-ES](http://opal.biology.gatech.edu/genemark/) and [Rnammer](https://services.healthtech.dtu.dk/service.php?RNAmmer-1.2).
 
-    Being a SnakeMake workflow, most programs are installed via conda thanks to two dedicated environments: 
-    - *annotation*: Maker, Agat, RepeatModeler, RepeatMasker, Augustus, Snap, T-RNA-scan-SE, Infernal, Barrnap.
+    Being a SnakeMake workflow, most programs are installed via conda thanks to three dedicated environments: 
+    - *annotation*: Maker, Agat RepeatMasker, Augustus, Snap, T-RNA-scan-SE, Infernal, Barrnap.
+    - *repeatmodeler*: RepeatModeler.
     - *toolbox*: Busco, CD-HIT, SRA Tookit and Entrez Direct.
 
     These environments are installed and used automatically thanks to the annotation.yaml and toolbox.yaml environment files (located in workflow/envs/). 
@@ -70,11 +71,16 @@ At the time of release, MyriAnnot was tested with:
 
 1. Fill config.yaml file.
 
-2. Let Snakemake configurate the needed conda environements:
+2. Let Snakemake install the needed conda environments:
     ```bash
-    snakemake --cores <threads_number> --use-conda results/configurate_conda.txt
+    snakemake --use-conda --cores 4 --snakefile workflow/Snakefile-env.smk
     ```
     Conda environements are installed to EXOGAP/.snakemake/conda/
+
+3. Lauch EXOGAP to configurate the conda environment:
+    ```bash
+    snakemake --use-conda --cores 4 results/check_config/check_all_config.txt
+    ```
 
 3. Lauch EXOGAP with a output file indicated or without (if you want to annotate all the species present in the ressource directory)
     ```

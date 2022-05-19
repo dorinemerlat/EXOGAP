@@ -1,4 +1,3 @@
-
 rule rnammer:
     input:
         genome="resources/genomes/{specie}_genome.fa"
