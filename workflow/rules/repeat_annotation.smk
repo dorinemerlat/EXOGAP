@@ -3,7 +3,8 @@ rule repeat_modeler:
         check = rules.check_all_config.output.all,
         genome = rules.reformat_genome.output.reformated_genome
     output:
-        repeats = "resources/repeats/{specie}_repeats_all.fa"
+        repeats = "results/{specie}/repeat_modeler/{specie}-families.fa",
+        repeats_link = "resources/repeats/{specie}_repeats_all.fa"
     params:
         path_repeatmodeler = find_environnement('repeatmodeler')
     log: 
@@ -15,9 +16,9 @@ rule repeat_modeler:
     shell:
         """
         exogap=$(pwd)
-        mkdir results/{wildcards.specie}
+        mkdir -p results/{wildcards.specie}
         cd results/{wildcards.specie}
-        mkdir repeat_modeler
+        mkdir -p repeat_modeler
         cd repeat_modeler
 
         bin_dir=$exogap/{params.path_repeatmodeler}/bin
@@ -26,15 +27,15 @@ rule repeat_modeler:
         # RepeatModeler -pa {threads} -engine ncbi -database {wildcards.specie} -LTRStruct 2>&1
         RepeatModeler -pa {threads} -engine ncbi -database {wildcards.specie} -LTRStruct \
             -ninja_dir $bin_dir 2>&1
-        ln -s $(pwd)/{wildcards.specie}-families.fa $exogap/{output.repeats}
+        ln -s $exogap/{output.repeats} $exogap/{output.repeats_link}
         """
 
 if config['repeats']['use_all_species'] == False:
     rule make_repeats_sets:
         input:
-            all_repeats = "resources/repeats/{specie}_repeats_all.fa"
+            all_repeats = "resources/{specie}/repeat_modeler/{specie}_repeats_all.fa"
         output:
-            known = "resources/repeats/{specie}_repeats_knowns.fa",
+            known = "resources/{specie}/repeat_lib/{specie}_repeats_knowns.fa",
             unknown = "resources/repeats/{specie}_repeats_unknowns.fa"
         log: 
             "logs/make_repeats_sets/{specie}.log"
@@ -43,10 +44,8 @@ if config['repeats']['use_all_species'] == False:
         shell:
             """
             exogap=$(pwd)
-            if [ ! -d results/{wildcards.specie}/split_repeats ]; then
-                mkdir results/{wildcards.specie}/split_repeats
-            fi
-
+            mkdir -p results/{wildcards.specie}/split_repeats
+            
             cd results/{wildcards.specie}/split_repeats
 
             $exogap/workflow/scripts/rename_repeats.py -i $exogap/{input.all_repeats} \
@@ -87,7 +86,7 @@ if config['repeats']['use_all_species'] == False:
 else:
     rule make_one_lib:
         input:
-            library_by_specie = expand("resources/repeats/{specie}_repeats_all.fa", specie = SPECIES)
+            library_by_specie = expand("resources/{specie}/repeat_modeler/{specie}_repeats_all.fa", specie = SPECIES)
         output:
             big_library = "resources/repeats/{set}_repeats_all.all"
         log: 
@@ -110,9 +109,7 @@ else:
         shell:
             """
             exogap=$(pwd)
-            if [ ! -d results/repeats/split_repeats ]; then
-                mkdir results/repeats/split_repeats
-            fi
+            mkdir -p results/repeats/split_repeats
 
             cd results/repeats/split_repeats
 

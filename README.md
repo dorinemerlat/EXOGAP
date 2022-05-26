@@ -24,27 +24,17 @@ In this user guide, you find all information about installation and usage of thi
 At the time of release, MyriAnnot was tested with: 
 
 - [SnakeMake 7.3.8](https://snakemake.readthedocs.io/en/stable/)
-- [Maker2 3.01.03](https://www.yandell-lab.org/software/maker.html)
-- [Agat v0.8.0](https://github.com/NBISweden/AGAT)
-- [RepeatModeler 2.0.3](https://github.com/Dfam-consortium/RepeatModeler)
-- [RepeatMasker 4.1.2-p1](https://www.repeatmasker.org/)
-- [Snap 2006-07-28](https://github.com/KorfLab/SNAP)
-- [Busco ov5.3.0](https://busco.ezlab.org)
-- [T-RNA-scan-SE 2.0.9](http://lowelab.ucsc.edu/tRNAscan-SE/)
 - [Gene-Mark-ES 4.*](http://opal.biology.gatech.edu/genemark/)
-- [Infernal 1.1.4](http://eddylab.org/infernal/)
 - [Rnammer 1.2](https://services.healthtech.dtu.dk/service.php?RNAmmer-1.2)
-- [Barnnap 0.9](https://github.com/tseemann/barrnap)
-- [CD-HIT 4.8.1](http://weizhong-lab.ucsd.edu/cd-hit/)
-- [SRA Tookit](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=software)
-- [Entrez Direct](https://www.ncbi.nlm.nih.gov/books/NBK179288/)
+- [MergeBlastXML](http://lindenb.github.io/jvarkit/MergeBlastXml.html)
+- [Blast2Go](https://www.biobam.com/blast2go-cli/)
 
 
 ### Installation
 
 1. Install [SnakeMake](https://snakemake.readthedocs.io/en/stable/) following the procedure indicated [here](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html).
 
-1. Manually install programs that cannot be installed by conda: [Gene-Mark-ES](http://opal.biology.gatech.edu/genemark/) and [Rnammer](https://services.healthtech.dtu.dk/service.php?RNAmmer-1.2).
+2. Manually install programs that cannot be installed by conda: [Gene-Mark-ES](http://opal.biology.gatech.edu/genemark/), [Rnammer](https://services.healthtech.dtu.dk/service.php?RNAmmer-1.2) and [MergeBlastXml](http://lindenb.github.io/jvarkit/MergeBlastXml.html)
 
     Being a SnakeMake workflow, most programs are installed via conda thanks to three dedicated environments: 
     - *annotation*: [Maker2](https://www.yandell-lab.org/software/maker.html) (3.01.03), [Agat](https://github.com/NBISweden/AGAT) (v0.8.0), [RepeatMasker](https://www.repeatmasker.org/) (4.1.2-p1), [Augustus](https://github.com/Gaius-Augustus/Augustus) (3.4.0), [Snap](https://github.com/KorfLab/SNAP) (2006-07-28), [T-RNA-scan-SE](http://lowelab.ucsc.edu/tRNAscan-SE/) (2.0.9), [Infernal](http://eddylab.org/infernal/) (1.1.4) and [Barnnap](https://github.com/tseemann/barrnap) (0.9).
@@ -53,17 +43,18 @@ At the time of release, MyriAnnot was tested with:
 
     These environments are installed and used automatically thanks to the annotation.yaml and toolbox.yaml environment files (located in workflow/envs/). 
 
-    [Jvarkit](https://github.com/lindenb/jvarkit) est cloné automatiquement depuis GitHub dans workflow/scripts/ et les programmes nécessaires sont compilés.
-1. Clone the repository
+
+3. Clone the repository
     
     ```bash
     clone git https://github.com/dorinemerlat/EXOGAP.git
     ```
 
-2. Check that all programs are installed and configured correctly
+
+4. Check that all programs are installed and configured correctly
 
     ```bash
-    cd /path/to/EXOGAP/
+    cd EXOGAP
     ```
 
 

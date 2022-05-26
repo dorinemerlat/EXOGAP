@@ -89,4 +89,4 @@ include: "rules/post_process.smk"
         # expand("results/all/{specie}_all.gb", specie = SPECIES)
 rule all:
     input:
-        expand("results/functionnal/blast/{specie}_blast.fa", specie = SPECIES)
+        expand("results/{specie}/functionnal/b2g/{specie}_results.txt", specie = SPECIES)

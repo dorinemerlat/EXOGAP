@@ -1,3 +1,5 @@
+dag.svg
+workflow/rules/functionnal_annotation_old.smk
 config/config_myriapoda.yaml
 dag_install.svg
 workflow/envs/repeatmodel_old.yaml
